@@ -13,5 +13,5 @@ public class SubtitleTest {
 		
 		assertEquals(subtitle2, subtitle1);
 	}
-
+	
 }
