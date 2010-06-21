@@ -1,7 +1,8 @@
 package com.github.joel1di1;
 
-import static org.junit.Assert.*;
-import static com.github.joel1di1.AnotherFileUtils.*;
+import static com.github.joel1di1.AnotherFileUtils.createTmpFile;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.io.IOException;

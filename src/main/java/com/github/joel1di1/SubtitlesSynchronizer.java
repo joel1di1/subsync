@@ -12,6 +12,10 @@ public class SubtitlesSynchronizer {
 
 		List<String> lines = readFile(f);
 
+		return read(lines);
+	}
+
+	protected Subtitles read(List<String> lines) {
 		Subtitles subtitles = new Subtitles();
 		
 		subtitles.readSubtitles(lines);

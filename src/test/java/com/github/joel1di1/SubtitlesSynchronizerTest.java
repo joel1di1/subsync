@@ -8,7 +8,6 @@ import java.io.File;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 public class SubtitlesSynchronizerTest {
@@ -18,12 +17,6 @@ public class SubtitlesSynchronizerTest {
 	@Before
 	public void setUp() throws Exception {
 		subtitlesSynchronizer = new SubtitlesSynchronizer();
-	}
-
-	@Test
-	@Ignore
-	public void shouldShiftSomeSeconds() {
-
 	}
 
 	@Test
@@ -41,9 +34,26 @@ public class SubtitlesSynchronizerTest {
 		assertEquals(new DateTime(1970, 1, 1, 0 , 0 , 20, 000, DateTimeZone.UTC), subtitle.startTime);
 		assertEquals(new DateTime(1970, 1, 1, 0 , 0 , 24, 400, DateTimeZone.UTC), subtitle.endTime);
 		assertEquals("Altocumulus clouds occur between six thousand", subtitle.text);
-		
 
 	}
+	
+
+	@Test
+	public void shouldReadSrtFilesWithTextOnSeveralLines() {
+		File f = createTmpFile(
+				"1", 
+				"00:39:54,985 --> 00:39:58,159",
+				"Comment avez vous fait ?",
+				"Comment avez-vous pu tout récupérer ?"
+				);
+
+		Subtitles subs = subtitlesSynchronizer.read(f);
+
+		Subtitle subtitle = subs.get(0);
+		assertEquals("Comment avez vous fait ?\nComment avez-vous pu tout récupérer ?", subtitle.text);
+	}
+	
+	
 	@Test
 	public void shouldReadSrtFilesWithSeveralSubs() {
 		File f = createTmpFile(
@@ -70,8 +80,7 @@ public class SubtitlesSynchronizerTest {
 		assertEquals(new DateTime(1970, 1, 1, 2 , 13 , 23, 970, DateTimeZone.UTC), subtitle.startTime);
 		assertEquals(new DateTime(1970, 1, 1, 2 , 14 , 45, 123, DateTimeZone.UTC), subtitle.endTime);
 		assertEquals("<i>J'étais un agent secret jusqu'à ce que...</i>", subtitle.text);
-		
-
 	}
+	
 
 }

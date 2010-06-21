@@ -1,5 +1,11 @@
 package com.github.joel1di1;
 
+import static com.github.joel1di1.AnotherFileUtils.appendLines;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.joda.time.format.DateTimeFormat;
@@ -31,6 +37,15 @@ public class Subtitle {
 		
 		this.startTime = fmt.parseDateTime(times[0]);
 		this.endTime = fmt.parseDateTime(times[1]);
+	}
+
+
+	public Subtitle(int index, String text, DateTime startTime, DateTime endTime) {
+		super();
+		this.index = index;
+		this.text = text;
+		this.startTime = startTime;
+		this.endTime = endTime;
 	}
 
 	@Override
@@ -73,4 +88,20 @@ public class Subtitle {
 			return false;
 		return true;
 	}
+
+	public Subtitle shift(long milliseconds) {
+		return new Subtitle(this.index, text,
+		startTime.plus(milliseconds),
+		endTime.plus(milliseconds));
+	}
+
+	public void writeToFile(File file) throws IOException {
+		ArrayList<String> lines = new ArrayList<String>(4);
+		lines.add(new String(Integer.toString(index)));
+		lines.add(fmt.print(startTime)+" --> "+fmt.print(endTime));
+		lines.add(text);
+		lines.add("");
+		appendLines(file, lines);
+	}
+	
 }
