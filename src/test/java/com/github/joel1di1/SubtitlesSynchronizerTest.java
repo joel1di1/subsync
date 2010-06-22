@@ -1,7 +1,7 @@
 package com.github.joel1di1;
 
 import static com.github.joel1di1.AnotherFileUtils.createTmpFile;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -11,7 +11,6 @@ import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.internal.runners.statements.Fail;
 
 public class SubtitlesSynchronizerTest {
 
@@ -47,13 +46,13 @@ public class SubtitlesSynchronizerTest {
 				"1", 
 				"00:39:54,985 --> 00:39:58,159",
 				"Comment avez vous fait ?",
-				"Comment avez-vous pu tout rŽcupŽrer ?"
+				"Comment avez-vous pu tout rÃ©cupÃ©rer ?"
 				);
 
 		Subtitles subs = subtitlesSynchronizer.read(f);
 
 		Subtitle subtitle = subs.get(0);
-		assertEquals("Comment avez vous fait ?\nComment avez-vous pu tout rŽcupŽrer ?", subtitle.text);
+		assertEquals("Comment avez vous fait ?\nComment avez-vous pu tout rÃ©cupÃ©rer ?", subtitle.text);
 	}
 	
 	
@@ -66,7 +65,7 @@ public class SubtitlesSynchronizerTest {
 				null,
 				"2", 
 				"02:13:23,970 --> 02:14:45,123",
-				"<i>J'Žtais un agent secret jusqu'ˆ ce que...</i>"
+				"<i>J'Ã©tais un agent secret jusqu'Ã  ce que...</i>"
 				);
 
 		Subtitles subs = subtitlesSynchronizer.read(f);
@@ -82,7 +81,7 @@ public class SubtitlesSynchronizerTest {
 		assertEquals(2, subtitle.index);
 		assertEquals(new DateTime(1970, 1, 1, 2 , 13 , 23, 970, DateTimeZone.UTC), subtitle.startTime);
 		assertEquals(new DateTime(1970, 1, 1, 2 , 14 , 45, 123, DateTimeZone.UTC), subtitle.endTime);
-		assertEquals("<i>J'Žtais un agent secret jusqu'ˆ ce que...</i>", subtitle.text);
+		assertEquals("<i>J'Ã©tais un agent secret jusqu'Ã  ce que...</i>", subtitle.text);
 	}
 	
 	@Test
