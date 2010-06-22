@@ -87,8 +87,8 @@ public class Subtitles {
 		long firstShift = firstTime-currentFirstTime;
 		long secondShift = secondTime-currentSecondTime;
 		
-		BigDecimal tmpShift1 = new BigDecimal(currentSecondTime-currentTime).divide(new BigDecimal(currentSecondTime-currentFirstTime),BigDecimal.ROUND_HALF_UP).multiply(new BigDecimal(firstShift));
-		BigDecimal tmpShift2 = new BigDecimal(currentTime-currentFirstTime).divide(new BigDecimal(currentSecondTime-currentFirstTime),BigDecimal.ROUND_HALF_UP).multiply(new BigDecimal(secondShift));
+		BigDecimal tmpShift1 = new BigDecimal(currentSecondTime-currentTime).multiply(new BigDecimal(firstShift)).divide(new BigDecimal(currentSecondTime-currentFirstTime),BigDecimal.ROUND_HALF_UP);
+		BigDecimal tmpShift2 = new BigDecimal(currentTime-currentFirstTime).multiply(new BigDecimal(secondShift)).divide(new BigDecimal(currentSecondTime-currentFirstTime),BigDecimal.ROUND_HALF_UP);
 		
 		return tmpShift1.add(tmpShift2).longValue();
 	}

@@ -122,6 +122,28 @@ public class SubtitlesSynchronizerTest {
 		assertDateTimeEquals("00:06:00,000", subs.get(1).startTime);
 		assertDateTimeEquals("00:06:30,000", subs.get(1).endTime);
 	}
+	
+	@Test
+	public void shouldShiftWithNonConstantShiftShouldLinearyModifyTime() {
+		File f = createTmpFileOnlyWithTime(
+				"00:10:00,000 --> 00:10:30,000",
+				"00:15:00,000 --> 00:15:15,000",
+				"00:20:00,000 --> 00:20:30,000"
+				);
+
+		Subtitles subs = subtitlesSynchronizer.read(f);
+		
+		subs.shift(1, 30*60*1000, 3, 60*60*1000);
+		
+		assertDateTimeEquals("00:30:00,000", subs.get(0).startTime);
+		assertDateTimeEquals("00:30:30,000", subs.get(0).endTime);
+
+		assertDateTimeEquals("00:45:00,000", subs.get(1).startTime);
+		assertDateTimeEquals("00:45:15,000", subs.get(1).endTime);
+
+		assertDateTimeEquals("01:00:00,000", subs.get(2).startTime);
+		assertDateTimeEquals("01:00:30,000", subs.get(2).endTime);
+	}
 
 	private File createTmpFileOnlyWithTime(String... timelines) {
 		List<String> l = new ArrayList<String>();
