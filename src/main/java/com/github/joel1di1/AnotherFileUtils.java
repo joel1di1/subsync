@@ -13,16 +13,20 @@ import org.apache.commons.io.IOUtils;
 public class AnotherFileUtils {
 
 	public static File createTmpFile(String... lines) {
+		return createTmpFile(Arrays.asList(lines));
+	}
+	
+
+	public static File createTmpFile(List<String> l) {
 		File f;
 		try {
 			f = File.createTempFile("subsync-", ".tmp");
-			FileUtils.writeLines(f, Arrays.asList(lines));
+			FileUtils.writeLines(f, l);
 		} catch (IOException e) {
 			throw new SubSyncException("Impossible to create tmp file", e);
 		}
 		return f;
 	}
-	
 
 	public static void appendLines(File file, List<String> lines) throws IOException {
 		OutputStream out = null;

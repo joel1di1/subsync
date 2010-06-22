@@ -13,7 +13,7 @@ import org.joda.time.format.DateTimeFormatter;
 
 public class Subtitle {
 
-	private static DateTimeFormatter fmt = DateTimeFormat.forPattern("HH:mm:ss,SSS").withZone(DateTimeZone.UTC);
+	public static DateTimeFormatter fmt = DateTimeFormat.forPattern("HH:mm:ss,SSS").withZone(DateTimeZone.UTC);
 	
 	public final int index;
 	public final String text;
@@ -90,9 +90,7 @@ public class Subtitle {
 	}
 
 	public Subtitle shift(long milliseconds) {
-		return new Subtitle(this.index, text,
-		startTime.plus(milliseconds),
-		endTime.plus(milliseconds));
+		return new Subtitle(this.index, text, startTime.plus(milliseconds), endTime.plus(milliseconds));
 	}
 
 	public void writeToFile(File file) throws IOException {

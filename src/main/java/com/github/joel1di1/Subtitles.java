@@ -2,6 +2,7 @@ package com.github.joel1di1;
 
 import java.io.File;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -68,5 +69,27 @@ public class Subtitles {
 		for (Subtitle subtitle : subtitles) {
 			subtitle.writeToFile(file);
 		}
+	}
+	
+	public void shift(int firstIndex, long firstTime, int secondIndex, long secondTime) {
+		List<Subtitle> res = new LinkedList<Subtitle>();
+		for (Subtitle subtitle : subtitles) {
+			long shift = calculShift(firstIndex, firstTime, secondIndex, secondTime, subtitle.startTime.toDate().getTime());
+			res.add(subtitle.shift(shift));
+		}
+		subtitles = res;
+	}
+	
+	long calculShift(int firstIndex, long firstTime, int secondIndex, long secondTime, long currentTime) {
+		long currentFirstTime = get(firstIndex-1).startTime.toDate().getTime();
+		long currentSecondTime = get(secondIndex-1).startTime.toDate().getTime();
+		
+		long firstShift = firstTime-currentFirstTime;
+		long secondShift = secondTime-currentSecondTime;
+		
+		BigDecimal tmpShift1 = new BigDecimal(currentSecondTime-currentTime).divide(new BigDecimal(currentSecondTime-currentFirstTime),BigDecimal.ROUND_HALF_UP).multiply(new BigDecimal(firstShift));
+		BigDecimal tmpShift2 = new BigDecimal(currentTime-currentFirstTime).divide(new BigDecimal(currentSecondTime-currentFirstTime),BigDecimal.ROUND_HALF_UP).multiply(new BigDecimal(secondShift));
+		
+		return tmpShift1.add(tmpShift2).longValue();
 	}
 }
