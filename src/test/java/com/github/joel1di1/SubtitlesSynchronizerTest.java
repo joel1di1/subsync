@@ -105,6 +105,7 @@ public class SubtitlesSynchronizerTest {
 	private void assertDateTimeEquals(String string, DateTime startTime) {
 		assertEquals(string, Subtitle.fmt.print(startTime));
 	}
+	
 
 	@Test
 	public void shouldShiftWithNonConstantShift() {

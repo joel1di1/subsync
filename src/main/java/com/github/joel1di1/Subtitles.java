@@ -22,6 +22,7 @@ public class Subtitles {
 		subtitles.add(subtitle);
 	}
 
+
 	public int size() {
 		return subtitles.size();
 	}
